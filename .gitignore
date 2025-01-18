@@ -1,0 +1,40 @@
+# .gitignore for Java web project
+
+# IntelliJ IDEA specific
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse specific
+*.classpath
+*.project
+*.settings/
+
+# Build directories
+target/
+bin/
+
+# Maven dependencies
+dependency-reduced-pom.xml
+release.properties
+*.war
+*.ear
+
+# Logs and temp files
+*.log
+*.tmp
+hs_err_pid*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE specific config files
+.vscode/
+
+# Miscellaneous
+*.swp
+*.swo
+*.bak
+*.orig
