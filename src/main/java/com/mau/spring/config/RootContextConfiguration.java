@@ -32,7 +32,7 @@ public class RootContextConfiguration
     public Jaxb2Marshaller jaxb2Marshaller()
     {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setPackagesToScan(new String[] { "com.wrox.site" });
+        marshaller.setPackagesToScan("com.mau");
         return marshaller;
     }
 
