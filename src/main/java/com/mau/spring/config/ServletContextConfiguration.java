@@ -15,6 +15,7 @@ import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -30,6 +31,16 @@ public class ServletContextConfiguration implements WebMvcConfigurer {
     private final ObjectMapper objectMapper;
     private final Marshaller marshaller;
     private final Unmarshaller unmarshaller;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // This method maps URL paths to locations on the file system where static resources are stored.
+        // In this case, it serves all resources under /css/ from the application's "css" directory.
+        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        //This tells Spring to serve files under the /js/ URL path from the src/main/webapp/js/ directory.
+        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+
+    }
 
     @Autowired
     public ServletContextConfiguration(ObjectMapper objectMapper, Marshaller marshaller, Unmarshaller unmarshaller) {
