@@ -1,0 +1,21 @@
+<%--@elvariable id="message" type="com.mau.app.model.Message"--%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${title}</title>
+</head>
+<body>
+<h1>${title}</h1>
+<div class="actions">
+    <form:form method="post" modelAttribute="message">
+        <form:label path="user">User</form:label><br/>
+        <form:input path="user"/><br/>
+        <br/>
+        <form:label path="msgContent">Message Content:</form:label><br/>
+        <form:input path="msgContent"/><br/>
+        <br/>
+        <input type="submit" value="Save"/>
+    </form:form>
+</div>
+</body>
+</html>
