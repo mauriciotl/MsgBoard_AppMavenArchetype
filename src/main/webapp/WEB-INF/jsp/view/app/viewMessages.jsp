@@ -3,6 +3,7 @@
 <html>
 <head>
   <title>Message Board</title>
+  <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
   <script src="${pageContext.request.contextPath}/js/script.js"></script>
 

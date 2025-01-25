@@ -59,6 +59,7 @@
             <version>5.3.25</version> <!-- Use the latest version compatible with your project -->
         </dependency>
 
+
         <!-- Optional: Jackson for JSON parsing if using @ResponseBody with JSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

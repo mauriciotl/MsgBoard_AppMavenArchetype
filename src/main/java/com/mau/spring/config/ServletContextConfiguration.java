@@ -11,12 +11,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.RequestToViewNameTranslator;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -32,6 +30,18 @@ public class ServletContextConfiguration implements WebMvcConfigurer {
     private final Marshaller marshaller;
     private final Unmarshaller unmarshaller;
 
+    @Autowired
+    public ServletContextConfiguration(ObjectMapper objectMapper, Marshaller marshaller, Unmarshaller unmarshaller) {
+        this.objectMapper = objectMapper;
+        this.marshaller = marshaller;
+        this.unmarshaller = unmarshaller;
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("redirect:/messages");
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // This method maps URL paths to locations on the file system where static resources are stored.
@@ -42,12 +52,7 @@ public class ServletContextConfiguration implements WebMvcConfigurer {
 
     }
 
-    @Autowired
-    public ServletContextConfiguration(ObjectMapper objectMapper, Marshaller marshaller, Unmarshaller unmarshaller) {
-        this.objectMapper = objectMapper;
-        this.marshaller = marshaller;
-        this.unmarshaller = unmarshaller;
-    }
+
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -83,4 +88,6 @@ public class ServletContextConfiguration implements WebMvcConfigurer {
     public RequestToViewNameTranslator viewNameTranslator() {
         return new DefaultRequestToViewNameTranslator();
     }
+
+
 }

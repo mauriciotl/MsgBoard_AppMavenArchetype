@@ -17,7 +17,7 @@ public class HelloController {
     private GreetingService greetingService;
 
     @ResponseBody
-    @RequestMapping("/")
+    @RequestMapping("/helloSpring")
     public String helloWorld() {
         logger.info("Handling request to /");
         String message = "Hello, World! from Spring controller!!";
