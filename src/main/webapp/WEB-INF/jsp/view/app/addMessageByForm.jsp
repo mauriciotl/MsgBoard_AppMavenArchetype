@@ -2,4 +2,5 @@
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
 
 <c:set var="title" value="Add new Message" />
+<c:set var="loggedInUser" value="${loggedInUser}" />
 <%@ include file="messageForm.jspf" %>

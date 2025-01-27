@@ -59,7 +59,7 @@ public class LoginAuthController {
         User user = userDAO.getUserByNameAndPassword(
                 authLoginForm.getUsername(), authLoginForm.getPassword());
         if (user != null) {
-            //Allow access to app.
+            //Grant access to app.
             session.setAttribute("loggedInUser", user);
             return "redirect:/messages";
         } else {

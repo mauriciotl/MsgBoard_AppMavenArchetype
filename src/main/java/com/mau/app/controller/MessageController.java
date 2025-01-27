@@ -2,6 +2,7 @@ package com.mau.app.controller;
 
 import com.mau.app.dao.MessageDaoImpLocal;
 import com.mau.app.model.Message;
+import com.mau.app.model.User;
 import com.mau.app.service.GenerateMessageId;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -30,48 +32,66 @@ public class MessageController {
     }
 
     @GetMapping
-    public String viewMessages(Model model) {
+    public String viewMessages(Model model, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
         logger.info("Fetching all messages.");
         List<Message> messages = messageDao.getAllMessages();
         logger.debug("Successfully fetched {} messages.", messages.size());
         model.addAttribute("messages", messages);
+        model.addAttribute("loggedInUser", loggedInUser);
         Collections.reverse(messages);
         return "app/viewMessages";
     }
 
     @GetMapping("/addByForm")
-    public String addMessageByForm(Model model) {
+    public String addMessageByForm(Model model, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
         logger.info("Navigating to the add message form.");
+        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("message", new Message());
         return "app/addMessageByForm";
     }
 
     @PostMapping("/addByForm")
-    public View addMessageByForm(Message message) {
-        Message newMessage = new Message(idGenerator.getId(), message.getUser(),
+    public View addMessageByForm(Message message, HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        Message newMessage = new Message(idGenerator.getId(), loggedInUser.getName(),
                 message.getMsgContent(), new Date());
         messageDao.addMessage(newMessage);
-        logger.info("Message added successfully: {}", newMessage);
+        logger.info("Message added by Spring form-object successfully: {}", newMessage);
         return new RedirectView("/messages", true, false);
     }
 
     @GetMapping("/editMessageByForm/{messageId}")
-    public String editMessageByForm(Model model, @PathVariable("messageId") int messageId) {
-        logger.info("Fetching message for editing. Message ID: {}", messageId);
+    public String editMessageByForm(Model model, @PathVariable("messageId") int messageId,
+                                    HttpSession session) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        logger.info("Fetching message by Spring form-object for editing. Message ID: {}", messageId);
         Message msgForEdition = messageDao.getMessageById(messageId);
         model.addAttribute("message", msgForEdition);
+        model.addAttribute("loggedInUser", loggedInUser);
         logger.info("Successfully fetched message for editing: {}", msgForEdition);
         return "app/editMessageByForm";
     }
 
     @PostMapping("/editMessageByForm/{messageId}")
-    public View editMessageByForm(Message message, @PathVariable("messageId") int messageId) {
-        logger.info("Updating message. Message ID: {}", messageId);
+    public View editMessageByForm(Message message, @PathVariable("messageId") int messageId,
+                                  HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        logger.info("Updating message by Spring form-object. Message ID: {}", messageId);
         Message msg = messageDao.getMessageById(messageId);
-        msg.setUser(message.getUser());
+        msg.setUser(loggedInUser.getName());
         msg.setMsgContent(message.getMsgContent());
         messageDao.updateMessage(msg);
-        logger.info("Message updated successfully: {}", msg);
+        logger.info("Message updated by Spring form-object successfully: {}", msg);
         return new RedirectView("/messages", true, false);
     }
 

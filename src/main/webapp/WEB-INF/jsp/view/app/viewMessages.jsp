@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>Message Board</h1>
+<h2>User: ${loggedInUser.name}</h2>
 <a href="messages/addByForm">Add a new message</a>
 <a href="${pageContext.request.contextPath}/logout">Logout from application</a>
 <br/>
