@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class LocalDbDAO implements MessageDAO {
+public class MessageDaoImpLocal implements MessageDAO {
 
     private final List<Message> storeMessages = new ArrayList<>();
 

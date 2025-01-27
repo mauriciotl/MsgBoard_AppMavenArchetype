@@ -1,11 +1,10 @@
 package com.mau.app.controller;
 
-import com.mau.app.dao.LocalDbDAO;
+import com.mau.app.dao.MessageDaoImpLocal;
 import com.mau.app.model.Message;
 import com.mau.app.service.GenerateMessageId;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +21,10 @@ public class MessageController {
 
     private static final Logger logger = LogManager.getLogger(MessageController.class);
 
-    private final LocalDbDAO messageDao;
+    private final MessageDaoImpLocal messageDao;
     private final GenerateMessageId idGenerator;
 
-    public MessageController(LocalDbDAO messageDao, GenerateMessageId idGenerator) {
+    public MessageController(MessageDaoImpLocal messageDao, GenerateMessageId idGenerator) {
         this.messageDao = messageDao;
         this.idGenerator = idGenerator;
     }

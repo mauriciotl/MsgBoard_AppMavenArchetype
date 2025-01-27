@@ -1,6 +1,6 @@
 package com.mau.test;
 
-import com.mau.app.dao.LocalDbDAO;
+import com.mau.app.dao.MessageDaoImpLocal;
 import com.mau.app.model.Message;
 import com.mau.app.service.GenerateMessageId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ import java.util.List;
 public class TestMessageController {
 
     //Spring beans
-    private final LocalDbDAO localStorage;
+    private final MessageDaoImpLocal localStorage;
     private final GenerateMessageId getMsgId;
 
     @Autowired
-    public TestMessageController(LocalDbDAO localDbDAO, GenerateMessageId generateMessageId){
-        this.localStorage = localDbDAO;
+    public TestMessageController(MessageDaoImpLocal messageDaoImpLocal, GenerateMessageId generateMessageId){
+        this.localStorage = messageDaoImpLocal;
         this.getMsgId = generateMessageId;
     }
 

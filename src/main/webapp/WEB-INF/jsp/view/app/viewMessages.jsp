@@ -11,6 +11,7 @@
 <body>
 <h1>Message Board</h1>
 <a href="messages/addByForm">Add a new message</a>
+<a href="${pageContext.request.contextPath}/logout">Logout from application</a>
 <br/>
 <h2>Messages</h2>
 <ul>
