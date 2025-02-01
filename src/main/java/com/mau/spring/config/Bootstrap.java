@@ -1,5 +1,6 @@
 package com.mau.spring.config;
 
+import com.mau.app.filter.AuthenticationFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -21,9 +22,14 @@ public class Bootstrap implements WebApplicationInitializer
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
+        //Filters
         FilterRegistration.Dynamic filterRegistration =
                 container.addFilter("characterEncodingFilter", characterEncodingFilter);
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
+
+        // Register the AuthenticationFilter
+        filterRegistration = container.addFilter("AuthenticationFilter", new AuthenticationFilter());
+        filterRegistration.addMappingForUrlPatterns(null, false, "/*"); // Apply to all URLs
 
 
         container.getServletRegistration("default").addMapping("/resource/*");
@@ -41,5 +47,6 @@ public class Bootstrap implements WebApplicationInitializer
         );
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
+
     }
 }
